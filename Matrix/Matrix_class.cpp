@@ -1,6 +1,7 @@
 ﻿// Дворников Даниил
 #include "Matrix_class.h"
 
+/// Конструктор класса, выделяет память для матрицы размером n строк m столбцов
 Matrix::Matrix(int n, int m) {
 	matrix.resize(n);
 	for (int i{}; i < n; i++) {
@@ -8,6 +9,7 @@ Matrix::Matrix(int n, int m) {
 	}
 }
 
+/// Меняет размер матрицы на n строк m столбцов
 void Matrix::resize_mx(int n, int m) {
 	matrix.resize(n);
 	for (int i{}; i < n; i++) {
@@ -15,6 +17,7 @@ void Matrix::resize_mx(int n, int m) {
 	}
 }
 
+/// Заполнение всех элементов матрицы значением v
 void Matrix::fill_one_value(double v) {
 	for (int i{}; i < matrix.size(); i++) {
 		for (int j{}; j < matrix[0].size(); j++) {
@@ -23,6 +26,7 @@ void Matrix::fill_one_value(double v) {
 	}
 }
 
+/// Заполнение матрицы случайными значениями
 void Matrix::fill_rand() {
 	srand(time(0));
 	for (int i{}; i < matrix.size(); i++) {
@@ -32,6 +36,7 @@ void Matrix::fill_rand() {
 	}
 }
 
+/// Заполнение матрицы через консоль
 void Matrix::fill_hand() {
 	for (int i{}; i < matrix.size(); i++) {
 		for (int j{}; j < matrix[0].size(); j++) {
@@ -40,6 +45,18 @@ void Matrix::fill_hand() {
 	}
 }
 
+/// Вывод матрицы
+void Matrix::print_mx() {
+	for (int i{}; i < matrix.size(); i++) {
+		for (int j{}; j < matrix[0].size(); j++) {
+			cout << setw(12) << setprecision(3) << matrix[i][j];
+		}
+		cout << "\n";
+	}
+	cout << "\n";
+}
+
+/// Сумма матриц текущего объекта и mx_1, результат сохраняется в поле текущего объекта
 void Matrix::sum_mx(const Matrix& mx_1) {
 	if (matrix.size() != mx_1.matrix.size() && matrix[0].size() != mx_1.matrix[0].size()) throw invalid_argument("Размеры матриц не равны.");
 	for (int i{}; i < matrix.size(); i++) {
@@ -49,6 +66,7 @@ void Matrix::sum_mx(const Matrix& mx_1) {
 	}
 }
 
+/// Сумма матриц текущего объекта и mx_1, возвращает объект класса - результирующую матрицу
 Matrix Matrix::operator + (const Matrix& mx_1) {
 	if (matrix.size() != mx_1.matrix.size() && matrix[0].size() != mx_1.matrix[0].size()) throw invalid_argument("Размеры матриц не равны.");
 	Matrix mx_r(matrix.size(), matrix[0].size());
@@ -60,6 +78,7 @@ Matrix Matrix::operator + (const Matrix& mx_1) {
 	return mx_r;
 }
 
+/// Сумма матриц текущего объекта и mx_1, результат присваивается текущему объекту
 Matrix Matrix::operator += (const Matrix& mx_1) {
 	if (matrix.size() != mx_1.matrix.size() && matrix[0].size() != mx_1.matrix[0].size()) throw invalid_argument("Размеры матриц не равны.");
 	for (int i{}; i < matrix.size(); i++) {
@@ -70,6 +89,7 @@ Matrix Matrix::operator += (const Matrix& mx_1) {
 	return *this;
 }
 
+/// Разность матриц текущего объекта и mx_1, результат сохраняется в поле текущего объекта
 void Matrix::dif_mx(const Matrix& mx_1) {
 	if (matrix.size() != mx_1.matrix.size() && matrix[0].size() != mx_1.matrix[0].size()) throw invalid_argument("Размеры матриц не равны.");
 	for (int i{}; i < matrix.size(); i++) {
@@ -79,6 +99,7 @@ void Matrix::dif_mx(const Matrix& mx_1) {
 	}
 }
 
+/// Разность матриц текущего объекта и mx_1, возвращает объект класса - результирующую матрицу
 Matrix Matrix::operator - (const Matrix& mx_1) {
 	if (matrix.size() != mx_1.matrix.size() && matrix[0].size() != mx_1.matrix[0].size()) throw invalid_argument("Размеры матриц не равны.");
 	Matrix mx_r(matrix.size(), matrix[0].size());
@@ -90,6 +111,7 @@ Matrix Matrix::operator - (const Matrix& mx_1) {
 	return mx_r;
 }
 
+/// Разность матриц текущего объекта и mx_1, результат присваивается текущему объекту
 Matrix Matrix::operator -= (const Matrix& mx_1) {
 	if (matrix.size() != mx_1.matrix.size() && matrix[0].size() != mx_1.matrix[0].size()) throw invalid_argument("Размеры матриц не равны.");
 	for (int i{}; i < matrix.size(); i++) {
@@ -100,6 +122,7 @@ Matrix Matrix::operator -= (const Matrix& mx_1) {
 	return *this;
 }
 
+/// Произведение матрицы на число scalar
 void Matrix::scalar_multiply(double scalar) {
 	for (int i{}; i < matrix.size(); i++) {
 		for (int j{}; j < matrix[0].size(); j++) {
@@ -108,6 +131,7 @@ void Matrix::scalar_multiply(double scalar) {
 	}
 }
 
+/// Произведение матриц текущего объекта и mx_1, результат сохраняется в поле текущего объекта
 Matrix Matrix::matrix_multiply(const Matrix& mx_1) const {
 	if (matrix[0].size() != mx_1.matrix.size()) throw invalid_argument("Количество столбцов первой матрицы не равно количеству строк второй матрицы.");
 
@@ -122,6 +146,7 @@ Matrix Matrix::matrix_multiply(const Matrix& mx_1) const {
 	return mx_r;
 }
 
+/// Произведение матриц текущего объекта и mx_1, возвращает объект класса - результирующую матрицу
 Matrix Matrix::operator * (const Matrix& mx_1) const {
 	if (matrix[0].size() != mx_1.matrix.size()) throw invalid_argument("Количество столбцов первой матрицы не равно количеству строк второй матрицы.");
 	
@@ -136,6 +161,7 @@ Matrix Matrix::operator * (const Matrix& mx_1) const {
 	return mx_r;
 }
 
+/// Произведение матриц текущего объекта и mx_1, результат присваивается текущему объекту
 Matrix Matrix::operator *= (const Matrix& mx_1) {
 	if (matrix[0].size() != mx_1.matrix.size()) throw invalid_argument("Количество столбцов первой матрицы не равно количеству строк второй матрицы.");
 	Matrix mx_r(matrix.size(), matrix[0].size());
@@ -150,6 +176,7 @@ Matrix Matrix::operator *= (const Matrix& mx_1) {
 	return *this;
 }
 
+/// Транспонирование матрицы
 void Matrix::transposition_mx() {
 	if (matrix.size() == matrix[0].size()) {
 		double temp{};
@@ -186,8 +213,7 @@ void Matrix::transposition_mx() {
 	}
 }
 
-
-
+/// Вычисление определителя матрицы, возвращает число
 double Matrix::determinant_mx() const {
 	if (matrix.size() != matrix[0].size()) throw invalid_argument("Матрица должна быть квадратной.");
 	int m = matrix.size();
@@ -218,6 +244,7 @@ double Matrix::determinant_mx() const {
 	mx_1.clear();
 }
 
+/// Вычисление обратной матрицы, замена старой на обратную
 void Matrix::inverse_mx() {
 	if (matrix.size() != matrix[0].size()) throw invalid_argument("Матрица должна быть квадратной.");
 	else if (this->determinant_mx() == 0) throw invalid_argument("Определитель равен нулю.");
@@ -315,6 +342,7 @@ void Matrix::inverse_mx() {
 	mx_inv.clear();
 }
 
+/// Тестирование методов класса
 void test_Matrix_class() {
 	{
 		Matrix mx_1{ 2, 3 };
@@ -322,62 +350,99 @@ void test_Matrix_class() {
 		Matrix mx_3{ 2, 3 };
 
 		mx_1.fill_one_value(2.3);
+		cout << "mx_1 = \n";
+		mx_1.print_mx();
+
 		mx_2.fill_one_value(3.2);
+		cout << "mx_2 = \n";
+		mx_2.print_mx();
 
 		mx_1.sum_mx(mx_2);
 		assert(abs(mx_1.matrix[0][0] - 5.5) < eps);
+		cout << "mx_1 = mx_1 + mx_2 = \n";
+		mx_1.print_mx();
 
 		mx_1.dif_mx(mx_2);
 		assert(abs(mx_1.matrix[0][0] - 2.3) < eps);
+		cout << "mx_1 = mx_1 - mx_2 = \n";
+		mx_1.print_mx();
 
 		mx_3 = mx_1 + mx_2;
 		assert(abs(mx_3.matrix[0][0] - 5.5) < eps);
+		cout << "mx_3 = mx_1 + mx_2 = \n";
+		mx_3.print_mx();
 
 		mx_3 -= mx_2;
 		assert(abs(mx_3.matrix[0][0] - 2.3) < eps);
+		cout << "mx_3 -= mx_2 = \n";
+		mx_3.print_mx();
 
 		mx_3 += mx_2;
 		assert(abs(mx_3.matrix[0][0] - 5.5) < eps);
+		cout << "mx_3 += mx_2 = \n";
+		mx_3.print_mx();
 
 		mx_3 = mx_2 - mx_1;
 		assert(abs(mx_3.matrix[0][0] - 0.9) < eps);
+		cout << "mx_3 = mx_2 - mx_1 = \n";
+		mx_3.print_mx();
 
 		mx_1.scalar_multiply(2);
 		assert(abs(mx_1.matrix[0][0] - 4.6) < eps);
+		cout << "mx_1 * 2 = \n";
+		mx_1.print_mx();
 
 		mx_1.transposition_mx();
 		assert(abs(mx_1.matrix[2][1] - 4.6) < eps);
+		cout << "transposed mx_1 = \n";
+		mx_1.print_mx();
 	}
 	
 	{
 		Matrix mx_4{ 2, 2 };
 		vector<vector<double>> l{ vector<double>{ 1, 2 }, vector<double>{ 2, 1 } };
 		mx_4.matrix = l;
+		cout << "mx_4 = \n";
+		mx_4.print_mx();
 
 		Matrix mx_5{ 2, 2 };
 		vector<vector<double>> h{ vector<double>{ 3, 2 }, vector<double>{ 2, 3 } };
 		mx_5.matrix = h;
+		cout << "mx_5 = \n";
+		mx_5.print_mx();
 
 		Matrix mx_6{ 2, 2 };
 
 		mx_6 = mx_4.matrix_multiply(mx_5);
 		assert(abs(mx_6.matrix[0][0] - 7) < eps && abs(mx_6.matrix[0][1] - 8) < eps);
-
+		cout << "mx_6 = mx_4.matrix_multiply(mx_5) = \n";
+		mx_6.print_mx();
+		
 		mx_6 = mx_4 * mx_5;
 		assert(abs(mx_6.matrix[0][0] - 7) < eps && abs(mx_6.matrix[0][1] - 8) < eps);
+		cout << "mx_6 = mx_4 * mx_5 = \n";
+		mx_6.print_mx();
 
 		mx_4 *= mx_5;
 		assert(abs(mx_6.matrix[0][0] - 7) < eps && abs(mx_6.matrix[0][1] - 8) < eps);
+		cout << "mx_4 *= mx_5 = \n";
+		mx_4.print_mx();
 	}
 	
 	{
 		Matrix mx_7{ 3, 3 };
 		vector<vector<double>> temp{ vector<double>{ 1, 2, 3 }, vector<double>{ 2, 1, 3 }, vector<double>{ 4, 4, 7 } };
 		mx_7.matrix = temp;
+		cout << "mx_7 = \n";
+		mx_7.print_mx();
 
-		assert(abs(mx_7.determinant_mx() - 3.0) < eps);
+		double det = mx_7.determinant_mx();
+		assert(abs( det - 3.0) < eps);
+		cout << "determinant(mx_7) = " << det << "\n";
 
 		mx_7.inverse_mx();
 		assert(abs(mx_7.matrix[0][2] - 1) < eps);
+		cout << "Inverse mx_7 = \n";
+		mx_7.print_mx();
 	}
 }
